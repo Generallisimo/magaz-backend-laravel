@@ -13,9 +13,7 @@ Route::get('/blog', [\App\Http\Controllers\ProductController::class, 'shopBlog']
 // создание рендинг страницы и вывод её фун-ий
 Route::get('/shop', [\App\Http\Controllers\ProductController::class, 'shopList'])->name('shop');
 Route::get('/checkout',[\App\Http\Controllers\ProductController::class, 'checkOut'])->name('checkout')->middleware('auth');
-Route::get('/contact', function () {
-    return view('shop/contact');
-})->name('contact'); 
+Route::get('/contact', [\App\Http\Controllers\ContactController::class, 'shopContact'])->name('contact'); 
 Route::get('/regular-page', function () {
     return view('shop/regular-page');
 })->name('regular-page');
