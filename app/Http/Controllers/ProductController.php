@@ -36,7 +36,4 @@ class ProductController extends Controller
             'sum'=>$sum,
         ]);
     }
-
-
-
 }
