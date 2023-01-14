@@ -9,11 +9,13 @@ Route::get('/', function () {
 });
 // главные страницы страница
 Route::get('/home', [\App\Http\Controllers\ProductController::class, 'shopIndex'] )->name('home');
-Route::get('/blog', [\App\Http\Controllers\ProductController::class, 'shopBlog'])->name('blog');
+Route::get('/blog', [\App\Http\Controllers\BlogController::class, 'shopBlog'])->name('blog');
 // создание рендинг страницы и вывод её фун-ий
-Route::get('/shop', [\App\Http\Controllers\ProductController::class, 'shopList'])->name('shop');
-Route::get('/checkout',[\App\Http\Controllers\ProductController::class, 'checkOut'])->name('checkout')->middleware('auth');
+Route::get('/shop', [\App\Http\Controllers\ShopController::class, 'shopList'])->name('shop');
+// страница заказа
+Route::get('/checkout',[\App\Http\Controllers\ChekoutController::class, 'checkOut'])->name('checkout')->middleware('auth');
 Route::get('/contact', [\App\Http\Controllers\ContactController::class, 'shopContact'])->name('contact'); 
+
 Route::get('/regular-page', function () {
     return view('shop/regular-page');
 })->name('regular-page');
@@ -21,20 +23,20 @@ Route::get('/single-blog', function () {
     return view('shop/single-blog');
 })->name('single-blog');
 
-Route::get('/single-product-details', [\App\Http\Controllers\ProductController::class, 'productRetails'] )->name('productdetails');
+// страница которая регенирурет шаблоные товары
+Route::get('/single-product-details', [\App\Http\Controllers\ProductRetailController::class, 'productRetails'] )->name('productdetails');
 // карзина для товаров
-Route::get('/addcart/{id}', [\App\Http\Controllers\ProductController::class, 'addCart'])->name('addcart');
+Route::get('/addcart/{id}', [\App\Http\Controllers\CartController::class, 'addCart'])->name('addcart');
 // удаление из корзины
-Route::get('/removecart/{id}', [\App\Http\Controllers\ProductController::class, 'removeCart'])->name('removecart');
+Route::get('/removecart/{id}', [\App\Http\Controllers\CartController::class, 'removeCart'])->name('removecart');
 // выходим на эту страницу если зарегестрированы
-Route::get('/account', [\App\Http\Controllers\ProductController::class, 'accIndex'])->name('account')->middleware('auth');
+Route::get('/account', [\App\Http\Controllers\AccountController::class, 'accIndex'])->name('account')->middleware('auth');
 // отправка запроса на заказ
 // Route::post('shop/makeorder', [\App\Http\Controllers\ProductController::class, 'makeOrder'])->name('makeorder')->middleware('auth');
 
-
 Route::middleware('auth')->group( function(){
-    Route::post('shop/makeorder', [\App\Http\Controllers\ProductController::class, 'makeOrder'])->name('makeorder');
-    Route::get('shop/makeorder', [\App\Http\Controllers\ProductController::class, 'makeOrder'])->name('makeorder');
+    Route::post('shop/makeorder', [\App\Http\Controllers\ChekoutController::class, 'makeOrder'])->name('makeorder');
+    Route::get('shop/makeorder', [\App\Http\Controllers\ChekoutController::class, 'makeOrder'])->name('makeorder');
 });
 
 
